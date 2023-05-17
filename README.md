@@ -680,4 +680,30 @@ const whereAmI = function () {
       renderCountry(data);
     });
 };
-whereAmI();```
+whereAmI();
+```
+
+# Asynchoronous image loading
+```jsx
+const imgContainer = document.querySelector('.images');
+let imgElem;
+const createImg = function (img) {
+  return new Promise(function (resolve, reject) {
+    imgElem = document.createElement('img');
+    imgElem.src = img;
+    imgContainer.textContent = 'Loading...';
+
+    imgElem.addEventListener('load', function () {
+      imgContainer.textContent = 'Loading Finished!';
+      imgContainer.append(imgElem);
+      resolve(imgElem);
+    });
+
+    imgElem.addEventListener('error', function () {
+      imgContainer.textContent = 'Loading Failed!';
+      reject(new Error('Provieded url is wrong'));
+    });
+  });
+};
+createImg('img\\img-1.jpg');
+```
